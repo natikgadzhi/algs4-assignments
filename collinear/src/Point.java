@@ -63,11 +63,13 @@ public class Point implements Comparable<Point> {
 
         if (that.y == this.y) {
             if (that.x == this.x) return Double.NEGATIVE_INFINITY;
-            else return 0;
-        } else if (that.x == this.x) {
+            else return +0.0;
+        }
+        else if (that.x == this.x) {
             return Double.POSITIVE_INFINITY;
-        } else {
-            return (that.y - this.y)/(that.x - this.x);
+        }
+        else {
+            return (double) (that.y - this.y)/(that.x - this.x);
         }
     }
 
@@ -86,9 +88,10 @@ public class Point implements Comparable<Point> {
     public int compareTo(Point that) {
         if (that == null) throw new NullPointerException("Can't compare a point to null");
 
-        if (this.y != that.y){
+        if (this.y != that.y) {
             return this.y - that.y;
-        } else {
+        }
+        else {
             return this.x - that.x;
         }
     }
@@ -108,7 +111,13 @@ public class Point implements Comparable<Point> {
                 double slope1 = slopeTo(o1);
                 double slope2 = slopeTo(o2);
 
-                return (int) (slope1 - slope2);
+                if (slope1 > slope2) {
+                    return 1;
+                }
+                else if (slope1 == slope2) {
+                    return 0;
+                }
+                else return -1;
             }
         };
 
@@ -134,9 +143,9 @@ public class Point implements Comparable<Point> {
         // Let's create a few points and see their slopes.
 
         Point pt1 = new Point(1, 1);
-        Point pt2 = new Point(2,2);
+        Point pt2 = new Point(2, 2);
 
-        Point pt3 = new Point(1,1);
+        Point pt3 = new Point(1, 1);
 
         Point pt4 = new Point(1, 3);
 

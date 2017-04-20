@@ -1,7 +1,3 @@
-/**
- * Created by xnutsive on 19/04/2017.
- */
-
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
@@ -10,16 +6,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BruteCollinearPoints {
+public class FastCollinearPoints {
     private ArrayList<LineSegment> segments = new ArrayList<>();
 
     // finds all line segments containing 4 points
-    public BruteCollinearPoints(Point[] points) {
+    public FastCollinearPoints(Point[] points) {
         if (points == null)
             throw new NullPointerException("Points array is null");
 
-        Point[] sg = new Point[4];
         Point[] internalPoints = Arrays.copyOf(points, points.length);
+        int length = 0;
 
         Arrays.sort(internalPoints, new Comparator<Point>() {
             @Override
@@ -30,22 +26,19 @@ public class BruteCollinearPoints {
             }
         });
 
-        for (int a = 0; a < points.length; a++) {
-            for (int b = a+1; b < points.length; b++) {
-                for (int c = b+1; c < points.length; c++) {
-                    for (int d = c+1; d < points.length; d++) {
-                        if ((points[a].slopeTo(points[b]) == points[a].slopeTo(points[c])) &&
-                                (points[a].slopeTo(points[b]) == points[a].slopeTo(points[d]))) {
+        for (int i = 0; i < points.length; i++) {
+            Arrays.sort(internalPoints, points[i].slopeOrder());
 
-                            sg[0] = points[a];
-                            sg[1] = points[b];
-                            sg[2] = points[c];
-                            sg[3] = points[d];
+            for (int j = 1; j < internalPoints.length - 1; j++) {
+                if (points[i].slopeTo(internalPoints[j]) == points[i].slopeTo(internalPoints[j+1])) {
+                    length++;
+                }
+                else {
 
-                            Arrays.sort(sg);
-                            segments.add(new LineSegment(sg[0], sg[3]));
-                        }
-                    }
+                    if (length >= 4)
+                        segments.add(new LineSegment(points[i], internalPoints[j]));
+
+                    length = 2;
                 }
             }
         }
