@@ -6,8 +6,7 @@ https://www.coursera.org/learn/algorithms-part1
 - [x] Week 2, Deque, grade 92/100. Randomized array iterator needs a copy of array indices to iterate correctly. Thus memory consumption is up.
 - [x] Week 3, Collinear points
 - [x] Week 4, 8 Puzzle
-- [ ] Week 5
-- [ ] Week 6
+- [x] Week 5
 
 ### How to run
 
